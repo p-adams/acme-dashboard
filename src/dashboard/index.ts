@@ -1,3 +1,4 @@
+import { setupAPOD } from "../apod";
 import { getAPOD, render } from "../utils";
 
 // Define the initial state interface
@@ -12,6 +13,11 @@ export function setupDashboard(element: HTMLDivElement) {
     count: 0,
     apodData: null,
   };
+
+  function setAPODData(data: any) {
+    state.apodData = data;
+    renderDashboard(state);
+  }
 
   getAPOD().then((res) => setAPODData(res));
 
@@ -32,24 +38,29 @@ export function setupDashboard(element: HTMLDivElement) {
   function renderDashboard(state: DashboardState) {
     const dashboardHTML = `
       <div class="Dashboard--container">
-      ${
-        state.apodData
-          ? `<div class="APOD--container">
-                <h3>${
-                  state.apodData.media_type === "video" ? "Video" : "Image"
-                } of The Day</h3>
-                <h3>${state.apodData.title} - <span>${state.apodData.date}</h3>
-                <div class="Media--container">
-                  ${
-                    state.apodData.media_type === "video"
-                      ? `<iframe width="560" height="315" src=${state.apodData.url} frameborder="0" allowfullscreen></iframe>
-                    `
-                      : `<img src=${state.apodData.url} alt="Picture of the Day"/>`
-                  }
-                </div>
-            </div>`
-          : `<div class="shimmer loader"></div>`
-      }
+      <!--TODO: move to apod component -->
+        <div id="APOD">
+          ${
+            state.apodData
+              ? `<div class="APOD--container">
+                    <h3>${
+                      state.apodData.media_type === "video" ? "Video" : "Image"
+                    } of The Day</h3>
+                    <h3>${state.apodData.title} - <span>${
+                  state.apodData.date
+                }</h3>
+                    <div class="Media--container">
+                      ${
+                        state.apodData.media_type === "video"
+                          ? `<iframe width="560" height="315" src=${state.apodData.url} frameborder="0" allowfullscreen></iframe>
+                        `
+                          : `<img src=${state.apodData.url} alt="Picture of the Day"/>`
+                      }
+                    </div>
+                </div>`
+              : `<div class="shimmer loader"></div>`
+          }
+        </div>
       </div>
     `;
 
@@ -58,10 +69,6 @@ export function setupDashboard(element: HTMLDivElement) {
 
     // Attach event listener after rendering
     element.addEventListener("click", handleClick);
-  }
-
-  function setAPODData(data: any) {
-    state.apodData = data;
-    renderDashboard(state);
+    setupAPOD(document.querySelector<HTMLDivElement>("#APOD")!);
   }
 }
