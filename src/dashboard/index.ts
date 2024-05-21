@@ -5,12 +5,14 @@ import { DOM_UTILS, getAPOD, render } from "../utils";
 // Define the initial state interface
 interface DashboardState {
   count: number;
+  currentTab: HTMLElement | null;
 }
 
 // Define the dashboard component
 export function setupDashboard(element: HTMLDivElement) {
   let state: DashboardState = {
     count: 0,
+    currentTab: null,
   };
 
   // Initial render
@@ -33,8 +35,12 @@ export function setupDashboard(element: HTMLDivElement) {
     for (const tabItem of tabItems) {
       for (const tab of tabItem.children) {
         console.log("TAB: ", tab);
+        if (tab.checked) {
+          state.currentTab = tab;
+        }
       }
     }
+    return state.currentTab;
   }
 
   // Render function for rendering the dashboard UI
