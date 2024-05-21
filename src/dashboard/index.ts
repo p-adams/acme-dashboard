@@ -26,8 +26,20 @@ export function setupDashboard(element: HTMLDivElement) {
     }
   }
 
+  function getCurrentTab(element: HTMLElement) {
+    console.log(element);
+    // TODO: implement, and consider moving to DOM utils
+    const tabItems = element?.firstChild?.children;
+    for (const tabItem of tabItems) {
+      for (const tab of tabItem.children) {
+        console.log("TAB: ", tab);
+      }
+    }
+  }
+
   // Render function for rendering the dashboard UI
   function renderDashboard(_state: DashboardState) {
+    // TODO: maintain tab state in dashboard
     const dashboardHTML = `
       <div class="Dashboard--container">
         <!-- //TODO: build tab display for dashboard of up to 5 tabs -->
@@ -47,5 +59,6 @@ export function setupDashboard(element: HTMLDivElement) {
     setupAPOD<HTMLDivElement>(
       DOM_UTILS.withSelectors<HTMLDivElement>("#APOD")!
     );
+    getCurrentTab(DOM_UTILS.withSelectors<HTMLDivElement>("#TABS")!);
   }
 }
