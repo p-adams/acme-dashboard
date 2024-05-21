@@ -28,21 +28,6 @@ export function setupDashboard(element: HTMLDivElement) {
     }
   }
 
-  function getCurrentTab(element: HTMLElement) {
-    console.log(element);
-    // TODO: implement, and consider moving to DOM utils
-    const tabItems = element?.firstChild?.children;
-    for (const tabItem of tabItems) {
-      for (const tab of tabItem.children) {
-        console.log("TAB: ", tab);
-        if (tab.checked) {
-          state.currentTab = tab;
-        }
-      }
-    }
-    return state.currentTab;
-  }
-
   // Render function for rendering the dashboard UI
   function renderDashboard(_state: DashboardState) {
     // TODO: maintain tab state in dashboard
