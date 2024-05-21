@@ -1,6 +1,6 @@
 import { setupAPOD } from "../apod";
 import { setupTabs } from "../components/tabs";
-import { DOM_UTILS, getAPOD, render } from "../utils";
+import { DOM_UTILS, render } from "../utils";
 
 // Define the initial state interface
 interface DashboardState {
@@ -50,6 +50,5 @@ export function setupDashboard(element: HTMLDivElement) {
     setupAPOD<HTMLDivElement>(
       DOM_UTILS.withSelectors<HTMLDivElement>("#APOD")!
     );
-    getCurrentTab(DOM_UTILS.withSelectors<HTMLDivElement>("#TABS")!);
   }
 }
