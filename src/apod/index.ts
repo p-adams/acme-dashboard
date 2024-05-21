@@ -7,7 +7,7 @@ interface APODState {
   apodData: Maybe<APOD>;
 }
 
-export function setupAPOD(element: HTMLElement) {
+export function setupAPOD<T extends HTMLElement>(element: T) {
   if (!element) return;
 
   // Define the dashboard component
@@ -21,7 +21,9 @@ export function setupAPOD(element: HTMLElement) {
     renderAPOD(state);
   }
 
-  getAPOD().then((res) => setAPODData(res));
+  addEventListener("DOMContentLoaded", (event) => {
+    getAPOD().then((res) => setAPODData(res));
+  });
 
   // Initial render
   renderAPOD(state);

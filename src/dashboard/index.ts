@@ -1,5 +1,6 @@
 import { setupAPOD } from "../apod";
-import { getAPOD, render } from "../utils";
+import { setupTabs } from "../components/tabs";
+import { DOM_UTILS, getAPOD, render } from "../utils";
 
 // Define the initial state interface
 interface DashboardState {
@@ -29,6 +30,8 @@ export function setupDashboard(element: HTMLDivElement) {
   function renderDashboard(_state: DashboardState) {
     const dashboardHTML = `
       <div class="Dashboard--container">
+        <!-- //TODO: build tab display for dashboard of up to 5 tabs -->
+        <div id="TABS"></div>
         <div id="APOD"></div>
       </div>
     `;
@@ -38,6 +41,11 @@ export function setupDashboard(element: HTMLDivElement) {
 
     // Attach event listener after rendering
     element.addEventListener("click", handleClick);
-    setupAPOD(document.querySelector<HTMLDivElement>("#APOD")!);
+    setupTabs<HTMLDivElement>(
+      DOM_UTILS.withSelectors<HTMLDivElement>("#TABS")!
+    );
+    setupAPOD<HTMLDivElement>(
+      DOM_UTILS.withSelectors<HTMLDivElement>("#APOD")!
+    );
   }
 }

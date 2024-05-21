@@ -9,3 +9,9 @@ export async function getAPOD() {
     }`
   ).then((res) => res.json());
 }
+
+export const DOM_UTILS = {
+  withSelectors: <T extends HTMLElement>(selectors: string) => {
+    return document.querySelector<T>(selectors);
+  },
+};
