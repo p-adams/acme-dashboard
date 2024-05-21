@@ -1,13 +1,14 @@
+import { setupLoader } from "../components/loader";
 import { getAPOD, render } from "../utils";
 import "./style.css";
 
+// Define the initial state interface
+interface APODState {
+  apodData: Maybe<APOD>;
+}
+
 export function setupAPOD(element: HTMLElement) {
   if (!element) return;
-
-  // Define the initial state interface
-  interface APODState {
-    apodData: Maybe<APOD>;
-  }
 
   // Define the dashboard component
 
@@ -25,9 +26,9 @@ export function setupAPOD(element: HTMLElement) {
   // Initial render
   renderAPOD(state);
 
-  // Render function for rendering the dashboard UI
+  // Render function for rendering the Picture of the Day UI
   function renderAPOD(state: APODState) {
-    const dashboardHTML = `
+    const apodHTML = `
           ${
             state.apodData
               ? `<div class="APOD--container">
@@ -46,11 +47,10 @@ export function setupAPOD(element: HTMLElement) {
                       }
                     </div>
                 </div>`
-              : `<div class="shimmer loader"></div>`
+              : `<div id="loader"/>`
           }
       `;
-
-    // Render dashboard UI
-    render(element, dashboardHTML);
+    render(element, apodHTML);
+    setupLoader(document.querySelector<HTMLDivElement>("#loader")!);
   }
 }

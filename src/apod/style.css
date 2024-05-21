@@ -1,0 +1,6 @@
+.Media--container img,
+video {
+  height: 360px;
+  width: 430px;
+  object-fit: cover;
+}
