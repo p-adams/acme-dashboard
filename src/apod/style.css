@@ -4,3 +4,7 @@ video {
   width: 430px;
   object-fit: cover;
 }
+
+p.explanation {
+  font-size: small;
+}

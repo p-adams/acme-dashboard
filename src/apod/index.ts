@@ -47,7 +47,7 @@ export function setupAPOD<T extends HTMLElement>(element: T) {
   }
   document.addEventListener("apodDataUpdated", (event) => {
     // Todo: support proper typing of events
-    state.apodData = event.detail;
+    state.apodData = (event as any).detail;
     renderAPOD(state);
   });
 }
