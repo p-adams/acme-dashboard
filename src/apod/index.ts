@@ -1,5 +1,5 @@
 import { setupLoader } from "../components/loader";
-import { getAPOD, render } from "../utils";
+import { render } from "../utils";
 import "./style.css";
 
 // Define the initial state interface
@@ -46,7 +46,6 @@ export function setupAPOD<T extends HTMLElement>(element: T) {
     setupLoader(document.querySelector<HTMLDivElement>("#loader")!);
   }
   document.addEventListener("apodDataUpdated", (event) => {
-    // Todo: support proper typing of events
     state.apodData = (event as any).detail;
     renderAPOD(state);
   });
