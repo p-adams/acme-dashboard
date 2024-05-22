@@ -10,20 +10,9 @@ interface APODState {
 export function setupAPOD<T extends HTMLElement>(element: T) {
   if (!element) return;
 
-  // Define the dashboard component
-
   let state: APODState = {
     apodData: null,
   };
-
-  function setAPODData(data: any) {
-    state.apodData = data;
-    renderAPOD(state);
-  }
-
-  addEventListener("DOMContentLoaded", (event) => {
-    getAPOD().then((res) => setAPODData(res));
-  });
 
   // Initial render
   renderAPOD(state);
@@ -48,6 +37,7 @@ export function setupAPOD<T extends HTMLElement>(element: T) {
                           : `<img src=${state.apodData.url} alt="Picture of the Day"/>`
                       }
                     </div>
+                    <p class="explanation">${state.apodData.explanation}</p>
                 </div>`
               : `<div id="loader"/>`
           }
@@ -55,4 +45,9 @@ export function setupAPOD<T extends HTMLElement>(element: T) {
     render(element, apodHTML);
     setupLoader(document.querySelector<HTMLDivElement>("#loader")!);
   }
+  document.addEventListener("apodDataUpdated", (event) => {
+    // Todo: support proper typing of events
+    state.apodData = event.detail;
+    renderAPOD(state);
+  });
 }

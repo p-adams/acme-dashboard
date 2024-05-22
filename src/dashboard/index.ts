@@ -1,11 +1,12 @@
 import { setupAPOD } from "../apod";
 import { setupTabs } from "../components/tabs";
-import { DOM_UTILS, render } from "../utils";
+import { DOM_UTILS, getAPOD, render } from "../utils";
 
 // Define the initial state interface
 interface DashboardState {
   count: number;
   currentTab: HTMLElement | null;
+  apodData: Maybe<APOD>;
 }
 
 // Define the dashboard component
@@ -13,6 +14,7 @@ export function setupDashboard(element: HTMLDivElement) {
   let state: DashboardState = {
     count: 0,
     currentTab: null,
+    apodData: null,
   };
 
   // Initial render
@@ -27,6 +29,19 @@ export function setupDashboard(element: HTMLDivElement) {
       renderDashboard(state);
     }
   }
+
+  function setAPODData(data: any) {
+    // Once data is fetched, dispatch a custom event
+    const event = new CustomEvent("apodDataUpdated", {
+      detail: data,
+    });
+
+    document.dispatchEvent(event);
+  }
+
+  addEventListener("DOMContentLoaded", (event) => {
+    getAPOD().then((res) => setAPODData(res));
+  });
 
   // Render function for rendering the dashboard UI
   function renderDashboard(_state: DashboardState) {
