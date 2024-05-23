@@ -3,7 +3,7 @@ import { setupDashboard } from "./dashboard/index.ts";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
-    <h1>Cosmic Dashboad</h1>
+    <h1>Cosmic Dashboard</h1>
     <div class="card">
       <div id="dashboard"/>
     </div>

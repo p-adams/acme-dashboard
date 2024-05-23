@@ -5,7 +5,6 @@ import { DOM_UTILS, getAPOD, render } from "../utils";
 // Define the initial state interface
 interface DashboardState {
   count: number;
-  currentTab: HTMLElement | null;
   apodData: Maybe<APOD>;
 }
 
@@ -13,15 +12,15 @@ interface DashboardState {
 export function setupDashboard(element: HTMLDivElement) {
   let state: DashboardState = {
     count: 0,
-    currentTab: null,
     apodData: null,
   };
+  let currentTab: string | null = "tab1"; // currentTab: string | null; // some data-tab="tabName"
 
   // Initial render
-  renderDashboard(state);
+  renderDashboard();
 
   // Event handler function for handling click events
-  function handleClick(event: MouseEvent) {
+  function _handleClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (target.classList.contains("Dashboard--container")) {
       // Update state and re-render dashboard
@@ -38,17 +37,17 @@ export function setupDashboard(element: HTMLDivElement) {
 
     document.dispatchEvent(event);
   }
+  // load picture of the day data
 
-  addEventListener("DOMContentLoaded", (event) => {
-    getAPOD().then((res) => setAPODData(res));
-  });
+  getAPOD().then((res) => setAPODData(res));
 
   // Render function for rendering the dashboard UI
-  function renderDashboard(_state: DashboardState) {
+  function renderDashboard() {
     // TODO: maintain tab state in dashboard
     const dashboardHTML = `
       <div class="Dashboard--container">
         <!-- //TODO: build tab display for dashboard of up to 5 tabs -->
+        Current tab: ${currentTab}
         <div id="TABS"></div>
         <div id="APOD"></div>
       </div>
@@ -58,7 +57,7 @@ export function setupDashboard(element: HTMLDivElement) {
     render(element, dashboardHTML);
 
     // Attach event listener after rendering
-    element.addEventListener("click", handleClick);
+    // element.addEventListener("click", handleClick);
     setupTabs<HTMLDivElement>(
       DOM_UTILS.withSelectors<HTMLDivElement>("#TABS")!
     );
@@ -66,4 +65,8 @@ export function setupDashboard(element: HTMLDivElement) {
       DOM_UTILS.withSelectors<HTMLDivElement>("#APOD")!
     );
   }
+  document.addEventListener("tabUpdate", (event: any) => {
+    currentTab = event.detail.currentTab;
+    renderDashboard();
+  });
 }
