@@ -5,12 +5,13 @@ import "./index.css";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
 import { AppDashboard } from "./AppDashboard.tsx";
+import AppNav from "./AppNav.tsx";
 
 const router = createBrowserRouter([
   {
     element: (
       <main>
-        <h1>TEST</h1>
+        <AppNav />
         <Outlet />
       </main>
     ),
