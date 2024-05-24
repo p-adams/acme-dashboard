@@ -1,34 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import "./index.css";
-import { AppDashboard } from "./AppDashboard.tsx";
-import AppNav from "./AppNav.tsx";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
 
-const router = createBrowserRouter([
-  {
-    element: (
-      <main>
-        <AppNav />
-        <Outlet />
-      </main>
-    ),
-    children: [
-      {
-        path: "/",
-        element: <App />,
-      },
-      {
-        path: "/dashboard",
-        element: <AppDashboard />,
-      },
-    ],
-  },
+import "./index.css";
 
-  {},
-]);
+// Import the generated route tree
+import { routeTree } from "./routeTree.gen";
+
+// Create a new router instance
+const router = createRouter({ routeTree });
+
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
