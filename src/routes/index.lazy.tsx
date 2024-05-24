@@ -44,7 +44,6 @@ function App() {
                         width="560"
                         height="315"
                         src={data.url}
-                        frameBorder="0"
                         allowFullScreen
                       ></iframe>
                     ) : (
