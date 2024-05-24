@@ -1,6 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import "./App.css";
 import { useQuery } from "@tanstack/react-query";
+import AppLoader from "../components/AppLoader";
 
 export const Route = createLazyFileRoute("/")({
   component: App,
@@ -23,34 +24,36 @@ function App() {
         <div>main</div>
         <aside>
           NASA picture of the day
-          <div>{isLoading && <span className="loader">...</span>}</div>
           <div>
-            {isError && <span className="Info--error">Please Try Again</span>}
-          </div>
-          <div>
-            {data && (
-              <div className="APOD--container">
-                <h3>
-                  {data.media_type === "video" ? "Video" : "Image"} of The Day
-                </h3>
-                <h3>
-                  {data.title} - <span>{data.date}</span>
-                </h3>
-                <div className="Media--container">
-                  {data.media_type === "video" ? (
-                    <iframe
-                      width="560"
-                      height="315"
-                      src={data.url}
-                      frameBorder="0"
-                      allowFullScreen
-                    ></iframe>
-                  ) : (
-                    <img src={data.url} alt="Picture of the Day" />
-                  )}
+            {isLoading ? (
+              <AppLoader />
+            ) : isError ? (
+              <span className="Info--error">Please Try Again</span>
+            ) : (
+              data && (
+                <div className="APOD--container">
+                  <h3>
+                    {data.media_type === "video" ? "Video" : "Image"} of The Day
+                  </h3>
+                  <h3>
+                    {data.title} - <span>{data.date}</span>
+                  </h3>
+                  <div className="Media--container">
+                    {data.media_type === "video" ? (
+                      <iframe
+                        width="560"
+                        height="315"
+                        src={data.url}
+                        frameBorder="0"
+                        allowFullScreen
+                      ></iframe>
+                    ) : (
+                      <img src={data.url} alt="Picture of the Day" />
+                    )}
+                  </div>
+                  <p className="explanation">{data.explanation}</p>
                 </div>
-                <p className="explanation">{data.explanation}</p>
-              </div>
+              )
             )}
           </div>
         </aside>
