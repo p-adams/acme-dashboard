@@ -1,7 +1,7 @@
 import AppLoader from "../AppLoader";
 
 interface ApodProps {
-  data: Maybe<APOD>;
+  data: Maybe<Apod>;
   isLoading: boolean;
   isError: boolean;
 }
@@ -9,7 +9,7 @@ interface ApodProps {
 export default function Apod(props: ApodProps) {
   const { data, isError, isLoading } = props;
   return (
-    <>
+    <div className="Apod--Container">
       NASA picture of the day
       <div>
         {isLoading ? (
@@ -18,7 +18,7 @@ export default function Apod(props: ApodProps) {
           <span className="Info--error">Please Try Again</span>
         ) : (
           data && (
-            <div className="APOD--container">
+            <div className="Apod--Media-Container">
               <h3>
                 {data.media_type === "video" ? "Video" : "Image"} of The Day
               </h3>
@@ -42,6 +42,6 @@ export default function Apod(props: ApodProps) {
           )
         )}
       </div>
-    </>
+    </div>
   );
 }

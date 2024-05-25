@@ -1,7 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import "./App.css";
 import { useQuery } from "@tanstack/react-query";
-import AppLoader from "../components/AppLoader";
 import Apod from "../components/Apod";
 
 export const Route = createLazyFileRoute("/")({
@@ -9,7 +7,7 @@ export const Route = createLazyFileRoute("/")({
 });
 
 function App() {
-  const { data, isLoading, isError } = useQuery<Maybe<APOD>>({
+  const { data, isLoading, isError } = useQuery<Maybe<Apod>>({
     queryKey: ["apod"],
     queryFn: async () =>
       await fetch(

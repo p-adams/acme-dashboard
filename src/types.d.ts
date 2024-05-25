@@ -1,4 +1,4 @@
-interface APOD {
+interface Apod {
   date: string;
   explanation: string;
   media_type: string;
