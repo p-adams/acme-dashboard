@@ -2,13 +2,14 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import "./App.css";
 import { useQuery } from "@tanstack/react-query";
 import AppLoader from "../components/AppLoader";
+import Apod from "../components/Apod";
 
 export const Route = createLazyFileRoute("/")({
   component: App,
 });
 
 function App() {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery<Maybe<APOD>>({
     queryKey: ["apod"],
     queryFn: async () =>
       await fetch(
@@ -23,38 +24,7 @@ function App() {
       <div>
         <div>main</div>
         <aside>
-          NASA picture of the day
-          <div>
-            {isLoading ? (
-              <AppLoader />
-            ) : isError ? (
-              <span className="Info--error">Please Try Again</span>
-            ) : (
-              data && (
-                <div className="APOD--container">
-                  <h3>
-                    {data.media_type === "video" ? "Video" : "Image"} of The Day
-                  </h3>
-                  <h3>
-                    {data.title} - <span>{data.date}</span>
-                  </h3>
-                  <div className="Media--container">
-                    {data.media_type === "video" ? (
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={data.url}
-                        allowFullScreen
-                      ></iframe>
-                    ) : (
-                      <img src={data.url} alt="Picture of the Day" />
-                    )}
-                  </div>
-                  <p className="explanation">{data.explanation}</p>
-                </div>
-              )
-            )}
-          </div>
+          <Apod data={data} isLoading={isLoading} isError={isError} />
         </aside>
       </div>
     </section>
