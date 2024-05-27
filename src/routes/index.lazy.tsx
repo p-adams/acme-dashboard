@@ -1,6 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import Apod from "../components/Apod";
+import { request } from "../api";
 
 export const Route = createLazyFileRoute("/")({
   component: App,
@@ -9,12 +10,7 @@ export const Route = createLazyFileRoute("/")({
 function App() {
   const { data, isLoading, isError } = useQuery<Maybe<Apod>>({
     queryKey: ["apod"],
-    queryFn: async () =>
-      await fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${
-          import.meta.env.VITE_API_KEY
-        }`
-      ).then((res) => res.json()),
+    queryFn: async () => await request("planetary/apod"),
   });
   return (
     <section>
