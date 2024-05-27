@@ -11,6 +11,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --Text--info-warn: red;
+  --Text--info-notify: orange;
 }
 
 a {
@@ -65,4 +67,26 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* UTILITIES */
+.Text--info {
+  color: var(--Text--info);
+  font-size: small;
+}
+
+.Text--info.notify {
+  color: var(--Text--info-notify);
+}
+.Text--info.warn {
+  color: var(--Text--info-warn);
+}
+
+.Form {
+  display: flex;
+  gap: 10px;
+}
+
+.Form.column {
+  flex-direction: column;
 }

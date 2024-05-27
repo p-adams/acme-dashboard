@@ -9,16 +9,16 @@ interface ApodProps {
 export default function Apod(props: ApodProps) {
   const { data, isError, isLoading } = props;
   return (
-    <div className="Apod--Container">
+    <div className="Apod--container">
       NASA picture of the day
       <div>
         {isLoading ? (
           <AppLoader />
         ) : isError ? (
-          <span className="Info--error">Please Try Again</span>
+          <span className="Text--info-warn">Please Try Again</span>
         ) : (
           data && (
-            <div className="Apod--Media-Container">
+            <div className="Apod--media-container">
               <h3>
                 {data.media_type === "video" ? "Video" : "Image"} of The Day
               </h3>

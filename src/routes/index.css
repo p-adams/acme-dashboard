@@ -1,0 +1,23 @@
+.Home--content {
+  display: grid;
+  grid-template-columns: 1fr minmax(100px, 300px);
+  gap: 20px;
+}
+
+.Home--aside .Apod--container img {
+  width: 300px;
+  height: 240px;
+  object-fit: fill;
+}
+.Home--aside .Apod--container p {
+  font-size: small;
+}
+
+.Media--container {
+  width: 300px;
+  height: 240px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

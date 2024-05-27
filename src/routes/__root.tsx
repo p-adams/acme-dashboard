@@ -13,11 +13,6 @@ export const Route = createRootRoute({
                 Home
               </Link>
             </li>
-            <li>
-              <Link to="/dashboard" className="[&.active]:font-bold">
-                Dashboard
-              </Link>{" "}
-            </li>
           </ul>
         </nav>
       </header>
