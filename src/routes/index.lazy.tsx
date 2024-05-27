@@ -20,7 +20,16 @@ function HomePage() {
   const [geolocationIsSupported, setGeolocationIsSupported] = useState(false);
   const { data, isLoading, isError } = useQuery<Maybe<Apod>>({
     queryKey: ["apod"],
-    queryFn: async () => await request("planetary/apod"),
+    queryFn: async () =>
+      await request("planetary/apod?").then((res) => res.json()),
+  });
+
+  const imageryData = useQuery<any>({
+    queryKey: ["meow"],
+    queryFn: async () =>
+      await request(
+        "planetary/earth/imagery?lon=100.75&lat=1.5&date=2014-02-01&"
+      ).then((res) => res.blob()),
   });
 
   const hasCoords = useMemo<boolean>(() => {
@@ -39,8 +48,15 @@ function HomePage() {
       return;
     }
   }
-  // TODO: implement me
-  async function generateImagery() {}
+  async function generateImagery() {
+    try {
+      const { data, isLoading, isError } = await imageryData;
+      console.log(data);
+      // Process the blob as needed
+    } catch (error) {
+      console.error("Error generating imagery:", error);
+    }
+  }
   return (
     <section className="Home">
       <h1>Cosmic Dashboard</h1>
