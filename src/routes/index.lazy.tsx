@@ -39,6 +39,8 @@ function HomePage() {
       return;
     }
   }
+  // TODO: implement me
+  async function generateImagery() {}
   return (
     <section className="Home">
       <h1>Cosmic Dashboard</h1>
@@ -87,7 +89,7 @@ function HomePage() {
           </form>
           {hasCoords && (
             <div>
-              <button>Get Imagery</button>
+              <button onClick={() => generateImagery()}>Get Imagery</button>
               <div className="Media--container">
                 <img />
               </div>
