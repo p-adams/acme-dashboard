@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Apod from "../components/Apod";
 import { request } from "../api";
 import { useMemo, useState } from "react";
@@ -25,12 +25,13 @@ function HomePage() {
       await request("planetary/apod?").then((res) => res.json()),
   });
 
-  const imageryData = useQuery<any>({
-    queryKey: ["imagery"],
-    queryFn: async () =>
-      await request(
-        "planetary/earth/imagery?lon=100.75&lat=1.5&date=2014-02-01&"
-      ).then((res) => res.blob()),
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const data = await request(
+        `planetary/earth/imagery?lon=${coords.long}&lat=${coords.lat}&date=2018-01-01&dim=0.15&`
+      ).then((res) => res.blob());
+      setImageUrl(URL.createObjectURL(data));
+    },
   });
 
   const hasCoords = useMemo<boolean>(() => {
@@ -108,7 +109,7 @@ function HomePage() {
           </form>
           {hasCoords && (
             <div>
-              <button onClick={() => generateImagery()}>Get Imagery</button>
+              <button onClick={() => mutation.mutate()}>Get Imagery</button>
               <div className="Media--container">
                 {imageUrl && <img src={imageUrl} alt="Imagery" />}
               </div>
