@@ -17,6 +17,7 @@ function HomePage() {
     lat: null,
     long: null,
   });
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [geolocationIsSupported, setGeolocationIsSupported] = useState(false);
   const { data, isLoading, isError } = useQuery<Maybe<Apod>>({
     queryKey: ["apod"],
@@ -25,7 +26,7 @@ function HomePage() {
   });
 
   const imageryData = useQuery<any>({
-    queryKey: ["meow"],
+    queryKey: ["imagery"],
     queryFn: async () =>
       await request(
         "planetary/earth/imagery?lon=100.75&lat=1.5&date=2014-02-01&"
@@ -50,9 +51,11 @@ function HomePage() {
   }
   async function generateImagery() {
     try {
-      const { data, isLoading, isError } = await imageryData;
-      console.log(data);
-      // Process the blob as needed
+      const data = await request(
+        `planetary/earth/imagery?lon=${coords.long}&lat=${coords.lat}&date=2018-01-01&dim=0.15&`
+      ).then((res) => res.blob());
+
+      setImageUrl(URL.createObjectURL(data));
     } catch (error) {
       console.error("Error generating imagery:", error);
     }
@@ -107,7 +110,7 @@ function HomePage() {
             <div>
               <button onClick={() => generateImagery()}>Get Imagery</button>
               <div className="Media--container">
-                <img />
+                {imageUrl && <img src={imageUrl} alt="Imagery" />}
               </div>
             </div>
           )}
