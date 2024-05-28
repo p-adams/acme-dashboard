@@ -97,14 +97,16 @@ function HomePage() {
               />
             </label>
           </form>
-          {hasCoords && (
-            <div>
+
+          <div>
+            {hasCoords && (
               <button onClick={() => mutation.mutate()}>Get Imagery</button>
-              <div className="Media--container">
-                {imageUrl && <img src={imageUrl} alt="Imagery" />}
-              </div>
+            )}
+            <div className="Media--container">
+              {/** TODO: display alternative UI in case of loading/pending/error, etc. */}
+              {imageUrl && <img src={imageUrl} alt="Imagery" />}
             </div>
-          )}
+          </div>
         </div>
         <aside className="Home--aside">
           <Apod data={data} isLoading={isLoading} isError={isError} />
