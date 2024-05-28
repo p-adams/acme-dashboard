@@ -50,17 +50,7 @@ function HomePage() {
       return;
     }
   }
-  async function generateImagery() {
-    try {
-      const data = await request(
-        `planetary/earth/imagery?lon=${coords.long}&lat=${coords.lat}&date=2018-01-01&dim=0.15&`
-      ).then((res) => res.blob());
 
-      setImageUrl(URL.createObjectURL(data));
-    } catch (error) {
-      console.error("Error generating imagery:", error);
-    }
-  }
   return (
     <section className="Home">
       <h1>Cosmic Dashboard</h1>
