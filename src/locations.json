@@ -1,0 +1,37 @@
+[
+  {
+    "name": "The Great Pyramid of Giza, Egypt",
+    "latitude": 29.9788889,
+    "longitude": 31.1338889
+  },
+  {
+    "name": "Hanging Gardens of Babylon",
+    "latitude": 33.2230556,
+    "longitude": 43.6791667
+  },
+  {
+    "name": "Archaeological Site of Olympia, Greece",
+    "latitude": 37.6383333,
+    "longitude": 21.6297222
+  },
+  {
+    "name": "Temple of Artemis at Ephesus",
+    "latitude": 37.9258333,
+    "longitude": 23.9933333
+  },
+  {
+    "name": "Mausoleum at Halicarnassus",
+    "latitude": 37.0377778,
+    "longitude": 27.4238889
+  },
+  {
+    "name": "Rhodes, Greece",
+    "latitude": 36.4338889,
+    "longitude": 28.2175
+  },
+  {
+    "name": "Lighthouse of Alexandria, Egypt",
+    "latitude": 31.2141667,
+    "longitude": 29.8911111
+  }
+]

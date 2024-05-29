@@ -2,23 +2,35 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Apod from "../components/Apod";
 import { request } from "../api";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./index.css";
+import locations from "../locations.json";
 
 export const Route = createLazyFileRoute("/")({
   component: HomePage,
 });
 
 function HomePage() {
+  // COMPONENT FIELDS
   const [coords, setCoords] = useState<{
     lat: Maybe<number>;
     long: Maybe<number>;
   }>({
-    lat: null,
-    long: null,
+    lat: locations[0].latitude,
+    long: locations[0].longitude,
   });
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [geolocationIsSupported, setGeolocationIsSupported] = useState(false);
+  const hasCoords = useMemo<boolean>(() => {
+    return coords.lat !== null && coords.long !== null;
+  }, [coords]);
+
+  useEffect(() => {
+    mutation.mutate();
+  }, [coords]);
+
+  // QUERIES/MUTATIONS
+
   const { data, isLoading, isError } = useQuery<Maybe<Apod>>({
     queryKey: ["apod"],
     queryFn: async () =>
@@ -34,9 +46,7 @@ function HomePage() {
     },
   });
 
-  const hasCoords = useMemo<boolean>(() => {
-    return coords.lat !== null && coords.long !== null;
-  }, [coords]);
+  // UTILITIES
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -57,6 +67,25 @@ function HomePage() {
       <div className="Home--content">
         <div>
           <h3>Landsat Imagery Viewer</h3>
+          <h4>Preview Imagery of 7 Wonders of the Ancient World</h4>
+          <ul>
+            {locations.map((location) => (
+              <li
+                key={location.name}
+                className={`${location.latitude === coords.lat && location.longitude === coords.long ? "active" : ""}`}
+                onClick={() =>
+                  setCoords((coords) => ({
+                    ...coords,
+                    lat: location.latitude,
+                    long: location.longitude,
+                  }))
+                }
+              >
+                {location.name}
+              </li>
+            ))}
+          </ul>
+
           {!geolocationIsSupported && (
             <p className="Text--info warn">
               Geolocation is not supported by this browser. Click below to
