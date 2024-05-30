@@ -5,6 +5,7 @@ import { newsRequest, request } from "../api";
 import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 import locations from "../locations.json";
+import NewsFeedList from "../components/NewsFeed/NewsFeedList";
 
 export const Route = createLazyFileRoute("/")({
   component: HomePage,
@@ -76,22 +77,17 @@ function HomePage() {
 
   return (
     <section className="Home">
+      {/* TODO: implement layout */}
       <h1>Cosmic Dashboard</h1>
       <div className="Home--content">
-        {/* TODO: implement layout */}
-
         <div>
-          <div className="News--home-feed">
-            {newsData.data?.articles?.map((i) => (
-              <div key={i.url}>{i.title}</div>
-            ))}
-          </div>
+          <NewsFeedList articles={newsData.data?.articles} />
           <h3>Landsat Imagery Viewer</h3>
           <h4>Preview Imagery of 7 Wonders of the Ancient World</h4>
           <ul>
-            {locations.map((location) => (
+            {locations.map((location, index) => (
               <li
-                key={location.name}
+                key={`${location.name}-${index}`}
                 className={`${location.latitude === coords.lat && location.longitude === coords.long ? "active" : ""}`}
                 onClick={() =>
                   setCoords((coords) => ({
