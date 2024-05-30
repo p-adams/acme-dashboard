@@ -7,4 +7,18 @@ interface Apod {
   url: string;
 }
 
+interface NewsArticle {
+  author: string;
+  content: string;
+  description: string;
+  publishedAt: string;
+  source: {
+    id: string | null;
+    name: string;
+  };
+  title: string;
+  url: string;
+  urlToImage: string;
+}
+
 type Maybe<T> = T | null | undefined;

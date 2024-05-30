@@ -5,6 +5,7 @@ import "./root.css";
 export const Route = createRootRoute({
   component: () => (
     <main className="main-content">
+      {/* TODO: implement layout */}
       <header>
         <nav>
           <ul>

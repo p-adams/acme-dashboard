@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Apod from "../components/Apod";
-import { request } from "../api";
+import { newsRequest, request } from "../api";
 import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 import locations from "../locations.json";
@@ -37,6 +37,19 @@ function HomePage() {
       await request("planetary/apod?").then((res) => res.json()),
   });
 
+  const newsData = useQuery<{
+    status: string;
+    totalResults: number;
+    articles: Maybe<NewsArticle[]>;
+  }>({
+    queryKey: ["news"],
+    queryFn: async () => {
+      return await newsRequest(
+        "everything?q=Nasa&from=2024-04-30&sortBy=publishedAt&"
+      ).then((res) => res.json());
+    },
+  });
+
   const mutation = useMutation({
     mutationFn: async () => {
       const data = await request(
@@ -65,7 +78,14 @@ function HomePage() {
     <section className="Home">
       <h1>Cosmic Dashboard</h1>
       <div className="Home--content">
+        {/* TODO: implement layout */}
+
         <div>
+          <div className="News--home-feed">
+            {newsData.data?.articles?.map((i) => (
+              <div key={i.url}>{i.title}</div>
+            ))}
+          </div>
           <h3>Landsat Imagery Viewer</h3>
           <h4>Preview Imagery of 7 Wonders of the Ancient World</h4>
           <ul>
