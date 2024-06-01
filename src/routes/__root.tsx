@@ -4,14 +4,19 @@ import "./root.css";
 
 export const Route = createRootRoute({
   component: () => (
-    <main className="main-content">
+    <main className="Main--content">
       {/* TODO: implement layout */}
-      <header>
-        <nav>
+      <header className="Header--container">
+        <nav className="Nav--container">
           <ul>
             <li>
               <Link to="/" className="[&.active]:font-bold">
                 Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/news" className="[&.active]:font-bold">
+                News
               </Link>
             </li>
           </ul>
