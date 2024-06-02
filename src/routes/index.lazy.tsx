@@ -38,18 +38,21 @@ function HomePage() {
       await request("planetary/apod?").then((res) => res.json()),
   });
 
-  const newsData = useQuery<{
+  const headlineNewsData = useQuery<{
     status: string;
     totalResults: number;
     articles: Maybe<NewsArticle[]>;
   }>({
-    queryKey: ["news"],
+    queryKey: ["headlines"],
     queryFn: async () => {
       return await newsRequest(
-        "everything?q=Nasa&from=2024-04-30&sortBy=publishedAt&"
+        /* TODO: support multiple query string */
+        "top-headlines?q=space&from=2024-05-31&sortBy=publishedAt&"
       ).then((res) => res.json());
     },
   });
+
+  console.log("headline: ", headlineNewsData.data);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -81,7 +84,7 @@ function HomePage() {
       <h1>Cosmic Dashboard</h1>
       <div className="Home--content">
         <div>
-          <NewsFeedList articles={newsData.data?.articles} />
+          <NewsFeedList articles={headlineNewsData.data?.articles} />
           <h3>Landsat Imagery Viewer</h3>
           <h4>Preview Imagery of 7 Wonders of the Ancient World</h4>
           <ul>
