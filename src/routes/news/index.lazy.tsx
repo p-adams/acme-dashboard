@@ -18,7 +18,7 @@ function NewsPage() {
     queryKey: ["news"],
     queryFn: async () => {
       return await newsRequest(
-        `everything?q=Nasa&from=${format(new Date(), "yyyy-MM-dd")}&sortBy=publishedAt&`
+        `everything?q=Nasa&from=${format(new Date(), "yyyy-MM-dd")}&language=en&sortBy=publishedAt&`
       ).then((res) => res.json());
     },
   });

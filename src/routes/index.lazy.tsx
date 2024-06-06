@@ -57,7 +57,7 @@ function HomePage() {
   const mutation = useMutation({
     mutationFn: async () => {
       const data = await request(
-        `planetary/earth/imagery?lon=${coords.long}&lat=${coords.lat}&date=2018-01-01&dim=0.15&`
+        `planetary/earth/imagery?lon=${coords.long}&lat=${coords.lat}&date=2014-04-04&dim=0.25&`
       ).then((res) => res.blob());
       setImageUrl(URL.createObjectURL(data));
     },
