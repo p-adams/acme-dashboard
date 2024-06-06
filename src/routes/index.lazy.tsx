@@ -10,7 +10,7 @@ import NewsFeedList from "../components/NewsFeed/NewsFeedList";
 export const Route = createLazyFileRoute("/")({
   component: HomePage,
 });
-
+// TODO: improve slow loading times
 function HomePage() {
   // COMPONENT FIELDS
   const [coords, setCoords] = useState<{

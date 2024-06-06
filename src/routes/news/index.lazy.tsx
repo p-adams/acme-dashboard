@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { format } from "date-fns";
 import { newsRequest } from "../../api";
 import NewsFeedList from "../../components/NewsFeed/NewsFeedList";
 
@@ -17,15 +18,15 @@ function NewsPage() {
     queryKey: ["news"],
     queryFn: async () => {
       return await newsRequest(
-        "everything?q=Nasa&from=2024-05-01&sortBy=publishedAt&"
+        `everything?q=Nasa&from=${format(new Date(), "yyyy-MM-dd")}&sortBy=publishedAt&`
       ).then((res) => res.json());
     },
   });
 
   return (
-    <div>
-      {" "}
+    <section className="News--page">
+      <h3>Today's News</h3>
       <NewsFeedList articles={newsData.data?.articles} />
-    </div>
+    </section>
   );
 }
