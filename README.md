@@ -1,6 +1,6 @@
 # AdaptiveUI
 
-![Platform Screenshot](/path/to/screenshot.png)
+WIP
 
 ## Table of Contents
 
